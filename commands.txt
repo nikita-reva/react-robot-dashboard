@@ -1,0 +1,25 @@
+// Launch the ROS2 web bridge
+cd ~/vscode_ws/ros2-web-bridge
+node bin/rosbridge.js
+
+// Run turtlesim simulation
+ros2 run turtlesim turtlesim_node
+
+// Get full path of map file
+readlink -f tb3_house_map.yaml
+
+// Run turtlebot3 simulation house environment
+export TURTLEBOT3_MODEL=waffle
+export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/opt/ros/foxy/share/turtlebot3_gazebo/models
+ros2 launch turtlebot3_gazebo turtlebot3_house.launch.py 
+// OR
+export TURTLEBOT3_MODEL=burger
+export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/opt/ros/foxy/share/turtlebot3_gazebo/models
+ros2 launch turtlebot3_gazebo turtlebot3_house.launch.py 
+
+// Run turtlebot3 navigation with house map
+export TURTLEBOT3_MODEL=waffle
+ros2 launch turtlebot3_navigation2 navigation2.launch.py map:=/home/nikita/vscode_ws/react-ros2-robot/map/tb3_house_map.yaml
+// OR
+export TURTLEBOT3_MODEL=burger
+ros2 launch turtlebot3_navigation2 navigation2.launch.py map:=/home/nikita/vscode_ws/react-ros2-robot/map/tb3_house_map.yaml
